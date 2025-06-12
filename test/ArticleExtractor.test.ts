@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Readability } from '@mozilla/readability';
 import { JSDOM } from 'jsdom';
-import { ArticleExtractor } from '../src/nodes/ArticleExtractor/ArticleExtractor.node';
+import { ArticleExtractor } from '../nodes/ArticleExtractor/ArticleExtractor.node';
 
 // Function to extract article content (similar to the one in test-extract.ts)
 function extractArticleFromHtml(html: string, url?: string): any {
@@ -36,7 +36,9 @@ describe('ArticleExtractor', () => {
   // with appropriate mocking for IExecuteFunctions and other n8n interfaces
 
   test('verify node has extract operation', () => {
-    const operations = node.description.properties.find((p) => p.name === 'operation');
+    const operations = node.description.properties.find(
+      (p: { name: string }) => p.name === 'operation',
+    );
     expect(operations).toBeDefined();
 
     if (operations && Array.isArray(operations.options)) {

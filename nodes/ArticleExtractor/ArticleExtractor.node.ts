@@ -16,7 +16,7 @@ export class ArticleExtractor implements INodeType {
     name: 'articleExtractor',
     icon: 'file:article.svg',
     group: ['transform'],
-    version: 1,
+    version: 0,
     subtitle: '={{$parameter["operation"]}}',
     description: 'Extract article content from web pages using Mozilla Readability',
     defaults: {
@@ -24,6 +24,7 @@ export class ArticleExtractor implements INodeType {
     },
     inputs: [NodeConnectionType.Main],
     outputs: [NodeConnectionType.Main],
+    usableAsTool: true,
     properties: [
       {
         displayName: 'Operation',
