@@ -1,0 +1,55 @@
+{
+    // Default state for all rules
+    "default": true,
+
+    // MD001: Heading levels should only increment by one level at a time
+    "MD001": true,
+
+    // MD003: Heading style (# H1, ## H2, etc.)
+    "MD003": { "style": "atx" },
+
+    // MD004: Unordered list style (-, *, +)
+    "MD004": { "style": "dash" },
+
+    // MD007: Unordered list indentation - matches Prettier config for markdown
+    "MD007": { "indent": 4 },
+
+    // MD013: Line length - defer to Prettier
+    "MD013": false,
+
+    // MD022: Headings should be surrounded by blank lines
+    "MD022": true,
+
+    // MD024: Multiple headings with the same content
+    "MD024": { "siblings_only": true },
+
+    // MD025: Single title/heading level at the beginning of the document
+    "MD025": true,
+
+    // MD026: Trailing punctuation in heading
+    "MD026": { "punctuation": ".,;:!" },
+
+    // MD029: Ordered list item prefix - use consistent prefixes (1. 1. 1. not 1. 2. 3.)
+    "MD029": { "style": "one" },
+
+    // MD031: Blank lines around fenced code blocks
+    "MD031": true,
+
+    // MD032: Blank lines around lists
+    "MD032": true,
+
+    // MD033: Allow inline HTML
+    "MD033": false,
+
+    // MD040: Fenced code blocks should have a language specified
+    "MD040": true,
+
+    // MD041: First line in a file should be a top-level heading
+    "MD041": true,
+
+    // MD046: Code block style
+    "MD046": { "style": "fenced" },
+
+    // MD048: Code fence style - defer to Prettier
+    "MD048": false,
+}

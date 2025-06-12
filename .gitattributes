@@ -1,0 +1,8 @@
+# Mark test fixtures as generated to be ignored by Git blame
+test/fixtures/** linguist-generated=true
+test/fixtures/** -diff
+
+# Treat test fixtures as binary files in Git
+test/fixtures/confluent-blog.html binary
+test/fixtures/confluent-blog-extracted.html binary
+test/fixtures/sample-article.html binary

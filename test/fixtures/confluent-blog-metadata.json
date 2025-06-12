@@ -1,0 +1,7 @@
+{
+  "title": "KIP-848: A New Consumer Rebalance Protocol for Apache Kafka® 4.0",
+  "byline": "Written ByJonathan LacefieldGroup Product Manager",
+  "excerpt": "Introducing KIP-848, the next-gen consumer rebalance protocol in Apache Kafka 4.0. Learn how it improves availability, speeds up rebalances, and simplifies consumer group coordination.",
+  "siteName": "Confluent",
+  "length": 9066
+}
