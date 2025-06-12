@@ -21,6 +21,14 @@
         "skipLibCheck": true,
         "outDir": "./dist/"
     },
-    "include": ["src/**/*", "src/**/*.json", "package.json", "test/**/*"],
-    "exclude": ["node_modules", "dist"]
+    "include": [
+      "nodes/**/*",
+      "nodes/**/*.json",
+      "package.json",
+       "test/**/*"
+      ],
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
 }

@@ -1,0 +1,8 @@
+# Version locations
+
+1. /Users/luketaylor/code/n8n-nodes-article-extract/version.txt (primary source)
+2. /Users/luketaylor/code/n8n-nodes-article-extract/package.json - "version" field
+3. /Users/luketaylor/code/n8n-nodes-article-extract/package.json - "n8n.n8nNodesApiVersion" field (API version) - Should be 1
+4. /Users/luketaylor/code/n8n-nodes-article-extract/package-lock.json - "version" field (multiple locations: root and in "packages" section)
+5. /Users/luketaylor/code/n8n-nodes-article-extract/nodes/ArticleExtractor/ArticleExtractor.node.ts - "version" property in INodeTypeDescription
+6. /Users/luketaylor/code/n8n-nodes-article-extract/CHANGELOG.md - Version headers

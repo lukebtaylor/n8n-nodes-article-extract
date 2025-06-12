@@ -1,0 +1,90 @@
+name: Version Check and Release
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'version.txt'
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Create release'
+        required: false
+        default: 'false'
+
+jobs:
+  version-check:
+    name: Check Version and Process Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from version.txt
+        id: version
+        run: |
+          VERSION=$(cat version.txt | head -n 1)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if version has changed (PR only)
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          if git show origin/${{ github.base_ref }}:version.txt | head -n 1 | grep -q "^$VERSION$"; then
+            echo "::error::Version in version.txt has not been increased. Please update the version."
+            exit 1
+          fi
+          echo "Version has been properly updated."
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag v$VERSION already exists. Please update the version in version.txt."
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          echo "tag_exists=false" >> $GITHUB_OUTPUT
+
+      - name: Setup Node.js
+        if: (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
+        run: npm ci
+
+      - name: Update all version references
+        if: (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
+        run: |
+          # Update package.json version
+          jq --arg ver "$VERSION" '.version = $ver' package.json > tmp.json && mv tmp.json package.json
+
+          # Extract major version for node file
+          MAJOR_VERSION=$(echo $VERSION | cut -d. -f1)
+
+          # Update node version in ArticleExtractor.node.ts (if it exists and has a version)
+          if [ -f "nodes/ArticleExtractor/ArticleExtractor.node.ts" ]; then
+            sed -i -E "s/(version: )([0-9]+)/\1$MAJOR_VERSION/" nodes/ArticleExtractor/ArticleExtractor.node.ts
+          fi
+
+          # Generate package-lock.json
+          npm install --package-lock-only
+
+      - name: Create tag and release
+        if: (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "v${{ steps.version.outputs.version }}"
+          tag_name: "v${{ steps.version.outputs.version }}"
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
