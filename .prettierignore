@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build output
+dist
+out
+build
+
+# Generated files
+coverage
+.nyc_output
+
+# Specific configs that should not be formatted by Prettier
+.editorconfig
+.eslintrc.js
+.eslintrc.prepublish.js
+.prettierrc.js
+
+# Ignore all markdown files - let markdownlint handle them instead
+# This avoids Prettier's inconsistent formatting of markdown lists
+# See: https://github.com/prettier/prettier/issues/16929
+*.md
+*.markdown
+
+
+test/fixtures/*.*
